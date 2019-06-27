@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>InsertBlock test</title>
+    <link rel="stylesheet" href="./css/styles.min.css" />
+    <script src="./js/insertblock.js"></script>
+  </head>
+  <body>
+    <main class="wrapper">
+      <form action="" class="form">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          class="form__textarea"
+        ></textarea>
+        <button type="submit" class="form__submit">Add comment</button>
+      </form>
+      <div class="comments"></div>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".form");
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+          const randomUser = () => {
+            return fetch("https://randomuser.me/api/").then(response =>
+              response.json()
+            );
+          };
+          randomUser().then(data => {
+            const picture = data.results[0].picture.medium;
+            const firstName = data.results[0].name.first;
+            const lastName = data.results[0].name.last;
+            insertBlock(".comments", {
+              animate: {
+                animation: "fade-in",
+                time: 200
+              },
+              block_params: {
+                tag: "div",
+                classes: ["comments__comment"],
+                children: [
+                  {
+                    tag: "div",
+                    classes: ["comments__comment-content"],
+                    children: [
+                      {
+                        tag: "p",
+                        innerHTML: `${firstName} ${lastName}`
+                      },
+                      {
+                        tag: "div",
+                        innerHTML: `<img src="${picture}">`
+                      },
+                      {
+                        tag: "p",
+                        classes: ["comments__comment-text"],
+                        innerHTML:
+                          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, incidunt."
+                      }
+                    ]
+                  }
+                ]
+              }
+            });
+          });
+          const comment = form.querySelector("textarea").value;
+        });
+      });
+    </script>
+  </body>
+</html>
