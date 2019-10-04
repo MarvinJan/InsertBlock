@@ -8,7 +8,7 @@ Usage
 const options = {
   block_parameters: {
     tag: "div", // tagname
-    classes: ["example"], // array off classnames of generated element
+    classes: ["example"], // array of classnames for generated element
     children: [] // array of children, that are formed the same way with objects that have tag, classes and children properties
   }
 };
