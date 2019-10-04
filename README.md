@@ -14,3 +14,4 @@ const options = {
 };
 new InsertBlock(_SelectorForParent_, options);
 ```
+A simple demo page, which has a dynamically generated comment blocks can be seen [here](https://marvinjan.github.io/insertBlock/).
