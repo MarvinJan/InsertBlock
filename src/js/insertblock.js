@@ -1,6 +1,5 @@
-(function() {
-  "use strict";
-  const insertBlock = function(
+class InsertBlock {
+  constructor(
     parent_selector,
     options = {
       position: null,
@@ -12,18 +11,18 @@
     const position = options.position || "beforeEnd";
     const parent = document.querySelector(parent_selector);
     const animate = options.animate;
-    const block = formBlock(options.block_params);
+    const block = this.formBlock(options.block_params);
 
     if (block.querySelector("img")) {
-      images_are_loaded(block).then(() =>
+      this.images_are_loaded(block).then(() =>
         parent.insertAdjacentElement(position, block)
       );
     } else {
       parent.insertAdjacentElement(position, block);
     }
-    animation(block, animate.animation, animate.time);
-  };
-  function formBlock(block_params) {
+    this.animation(block, animate.animation, animate.time);
+  }
+  formBlock(block_params) {
     const tag = block_params.tag || "div";
     const classes = block_params.classes || null;
     const innerHTML = block_params.innerHTML || null;
@@ -47,7 +46,7 @@
       children.forEach(child => {
         block.insertAdjacentElement(
           child.position || "beforeEnd",
-          formBlock(child)
+          this.formBlock(child)
         );
       });
     } else if (children && !Array.isArray(children)) {
@@ -58,7 +57,7 @@
     }
     return block;
   }
-  function animation(element, animation_name, animation_time) {
+  animation(element, animation_name, animation_time) {
     const animation = animation_name || "fade-in";
     const time = animation_time || 200;
     const steps = 60 * (time / 1000);
@@ -90,6 +89,7 @@
           { key: "opacity:", value: 1, concatination: ";" },
           { key: "transform: translateX(", value: 0, concatination: "%);" }
         ];
+        break;
       case "slide-up":
         initial_state = [
           { key: "opacity:", value: 0, concatination: ";" },
@@ -128,16 +128,14 @@
       } else {
         style_stringified = "";
         final_state.forEach(style => {
-          style_stringified += `${style.key}${style.value}${
-            style.concatination
-          }`;
+          style_stringified += `${style.key}${style.value}${style.concatination}`;
         });
         element.setAttribute("style", style_stringified);
       }
     };
     return animationInit();
   }
-  function images_are_loaded(parent) {
+  images_are_loaded(parent) {
     return new Promise((resolve, reject) => {
       const images = parent.querySelectorAll("img");
       const loaded = [];
@@ -153,6 +151,4 @@
       });
     });
   }
-
-  window.insertBlock = insertBlock;
-})();
+}

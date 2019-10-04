@@ -7,20 +7,29 @@
     <title>InsertBlock test</title>
     <link rel="stylesheet" href="./css/styles.min.css" />
     <script src="./js/insertblock.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <main class="wrapper">
-      <form action="" class="form">
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          class="form__textarea"
-        ></textarea>
-        <button type="submit" class="form__submit">Add comment</button>
-      </form>
-      <div class="comments"></div>
+      <div class="row">
+        <div class="form__container">
+          <form action="" class="form">
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+              class="form__textarea"
+            ></textarea>
+            <button type="submit" class="form__submit">Add comment</button>
+          </form>
+        </div>
+
+        <!-- <div class="comments"></div> -->
+      </div>
     </main>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -36,32 +45,38 @@
             const picture = data.results[0].picture.medium;
             const firstName = data.results[0].name.first;
             const lastName = data.results[0].name.last;
-            insertBlock(".comments", {
+            new InsertBlock(".row", {
               animate: {
-                animation: "fade-in",
+                animation: "slide-right",
                 time: 200
               },
               block_params: {
                 tag: "div",
-                classes: ["comments__comment"],
+                classes: ["comments__comment-container"],
                 children: [
                   {
                     tag: "div",
-                    classes: ["comments__comment-content"],
+                    classes: ["comments__comment"],
                     children: [
                       {
-                        tag: "p",
-                        innerHTML: `${firstName} ${lastName}`
-                      },
-                      {
                         tag: "div",
-                        innerHTML: `<img src="${picture}">`
-                      },
-                      {
-                        tag: "p",
-                        classes: ["comments__comment-text"],
-                        innerHTML:
-                          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, incidunt."
+                        classes: ["comments__comment-content"],
+                        children: [
+                          {
+                            tag: "p",
+                            innerHTML: `${firstName} ${lastName}`
+                          },
+                          {
+                            tag: "div",
+                            innerHTML: `<img src="${picture}">`
+                          },
+                          {
+                            tag: "p",
+                            classes: ["comments__comment-text"],
+                            innerHTML:
+                              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, incidunt."
+                          }
+                        ]
                       }
                     ]
                   }
